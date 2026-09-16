@@ -86,8 +86,23 @@ const presetAvatars = [
 document.addEventListener("DOMContentLoaded", async () => {
     renderPresetsGrid();
     convertEmojisToApple();
-});
 
+    // فحص الرابط إذا كان يحتوى على ?u=USER_ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetUid = urlParams.get("u");
+
+    if (targetUid) {
+        try {
+            const userSnap = await getDoc(doc(db, "users", targetUid));
+            if (userSnap.exists()) {
+                const targetUser = userSnap.data();
+                openSendToUser(targetUser); // فتح واجهة الإرسال مباشرة
+            }
+        } catch (e) {
+            console.error("Error fetching target user:", e);
+        }
+    }
+});
 // =====================================================
 // GOOGLE / FACEBOOK LOGIN
 // =====================================================
@@ -121,8 +136,10 @@ document.getElementById("facebook-login-btn")?.addEventListener("click", () => {
 onAuthStateChanged(auth, async user => {
     if (user) {
         await syncUserToDatabase(user);
+        await checkAndSendPendingMessage(); // 👈 أضف هذا السطر هنا مباشرة
     } else {
         currentUser = null;
+        // ... باقي الكود كما هو
         sentUsers = [];
         document.documentElement.removeAttribute("data-palette");
         document.querySelectorAll(".app-view").forEach(view => {
@@ -362,6 +379,10 @@ window.openSentUser = function (user) {
 // SEND MESSAGE
 // =====================================================
 
+// =====================================================
+// SEND MESSAGE (مع الإرسال بدون تسجيل دخول ثم التحويل)
+// =====================================================
+
 window.sendCloudMessage = async function () {
     const input = document.getElementById("send-input");
     const btn = document.getElementById("sendBtn");
@@ -373,10 +394,33 @@ window.sendCloudMessage = async function () {
     }
 
     if (!selectedRecipient) {
-        showToast("اختار شخص من البحث أولاً 👀");
+        showToast("اختار شخص من البحث أو افتح رابط مستخدم أولاً 👀");
         return;
     }
 
+    // 🌟 إذا كان المستخدم مش مسجل دخول 🌟
+    if (!currentUser) {
+        // حفظ البيانات مؤقتاً في ذاكرة المتصفح
+        const pendingData = {
+            recipientUid: selectedRecipient.uid,
+            text: text || "",
+            img: uploadedImageBase64 || null,
+            time: new Date().toLocaleString(),
+            timestamp: Date.now()
+        };
+        localStorage.setItem("pending_anonymous_msg", JSON.stringify(pendingData));
+
+        showToast("سجل الدخول أو أنشئ حساباً لإكمال إرسال الرسالة 🚀");
+
+        // تحويله فوراً لصفحة تسجيل الدخول
+        document.querySelectorAll(".app-view").forEach(view => view.classList.remove("active"));
+        document.getElementById("view-auth")?.classList.add("active");
+        const nav = document.getElementById("nav-bar");
+        if (nav) nav.style.display = "none";
+        return;
+    }
+
+    // إرسال عادي إذا كان مسجل الدخول
     try {
         if (btn) {
             btn.disabled = true;
@@ -412,7 +456,7 @@ window.sendCloudMessage = async function () {
     } finally {
         if (btn) {
             btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> إرسال الصراحة الآن';
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> إرسال الآن';
         }
     }
 };
@@ -1344,3 +1388,29 @@ window.closeSupportModal = function () {
     const modal = document.getElementById('support-modal');
     if (modal) modal.classList.remove('active');
 };
+// =====================================================
+// CHECK & SEND PENDING MESSAGE AFTER LOGIN
+// =====================================================
+
+async function checkAndSendPendingMessage() {
+    const savedMsg = localStorage.getItem("pending_anonymous_msg");
+    if (!savedMsg || !currentUser) return;
+
+    try {
+        const msgData = JSON.parse(savedMsg);
+        await addDoc(collection(db, "messages"), {
+            recipientUid: msgData.recipientUid,
+            text: msgData.text,
+            img: msgData.img,
+            time: msgData.time || new Date().toLocaleString(),
+            timestamp: msgData.timestamp || Date.now(),
+            isPinned: false,
+            reply: null
+        });
+
+        localStorage.removeItem("pending_anonymous_msg");
+        showToast("تم إرسال رسالتك المعلقة بنجاح ✨");
+    } catch (err) {
+        console.error("Error sending pending message:", err);
+    }
+}
