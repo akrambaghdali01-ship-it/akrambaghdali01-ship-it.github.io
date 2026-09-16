@@ -1,0 +1,792 @@
+/* =====================================================
+   I3TARFLI - STYLE.CSS (BLACK & WHITE EDITION)
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Tajawal", sans-serif;
+    direction: rtl;
+    min-height: 100vh;
+    background: #000000;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* VARIABLES */
+:root {
+    /* ألوان الخلفية والنصوص (أسود وأبيض) */
+    --bg-gradient: linear-gradient(135deg, #000000 0%, #121212 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.15);
+
+    /* المتغيرات الرئيسية بالأبيض والأسود */
+    --main-color: #ffffff;
+    --main-color-2: #cccccc;
+    --primary-color: #ffffff;
+    --primary-hover: #e0e0e0;
+    --btn-text: #000000;
+
+    /* النصوص */
+    --text-main: #ffffff;
+    --text-sub: #a0a0a0;
+    --text-muted: #a0a0a0;
+}
+
+/* CONTAINER */
+.container {
+    width: 100%;
+    max-width: 560px;
+    margin: auto;
+    padding: 25px 15px 110px;
+    min-height: 100vh;
+}
+
+/* VIEWS */
+.app-view {
+    display: none;
+    animation: pageIn .35s ease;
+}
+
+.app-view.active {
+    display: block;
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* GLASS CARD */
+.glass-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .8);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    margin-bottom: 15px;
+}
+
+/* PROFILE */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 10px;
+    border: 3px solid rgba(255, 255, 255, .9);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, .1);
+}
+
+.user-name {
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #ffffff;
+}
+
+.user-handle {
+    color: var(--text-sub);
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.user-bio {
+    color: var(--text-sub);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* BIO CARD */
+.bio-card {
+    width: 100%;
+    margin: 14px auto 10px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    backdrop-filter: blur(15px);
+    text-align: right;
+}
+
+.bio-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.bio-card-title i {
+    color: #ffffff;
+}
+
+/* INPUTS */
+.glass-input {
+    width: 100%;
+    border: 1px solid var(--glass-border);
+    outline: none;
+    background: rgba(255, 255, 255, .055);
+    color: white;
+    border-radius: 15px;
+    padding: 13px 15px;
+    margin-bottom: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: .25s;
+}
+
+.glass-input:focus {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, .1);
+}
+
+/* BUTTONS */
+.btn-main {
+    width: 100%;
+    min-height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #000000;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 10px 16px;
+    transition: .25s;
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    background: #e5e5e5;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, .1);
+    color: #ffffff;
+    border: 1px solid var(--glass-border);
+}
+
+/* ==========================================
+   NAVIGATION - شريط التنقل السفي الزجاجي
+   ========================================== */
+/* ==========================================
+   NAVIGATION - شريط التنقل السفلي الزجاجي
+   ========================================== */
+.nav-bar {
+    position: fixed;
+    z-index: 9000;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 25px);
+    max-width: 550px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 4px;
+    padding: 6px 8px;
+    border-radius: 22px;
+
+    /* التأثير الزجاجي الشفاف */
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+}
+
+.nav-item {
+    flex: 1;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-item i {
+    font-size: 15px;
+    transition: transform 0.2s ease;
+}
+
+.nav-item:hover {
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* الزر النشط (Active Tab) */
+.nav-item.active {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    font-weight: 800;
+}
+
+.nav-item.active i {
+    transform: scale(1.1);
+}
+
+/* UPLOAD BOX */
+.upload-box {
+    border: 1px dashed rgba(255, 255, 255, .3);
+    border-radius: 17px;
+    padding: 20px;
+    margin-bottom: 13px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--text-sub);
+}
+
+/* MESSAGE CARD & ACTIONS */
+.pinned {
+    border-color: rgba(255, 255, 255, .8);
+}
+
+.reply-box {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .08);
+    border-right: 3px solid #ffffff;
+    font-size: 13px;
+}
+
+.reply-header {
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+.action-btn {
+    border: 1px solid rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, .08);
+    color: white;
+    border-radius: 10px;
+    padding: 8px 11px;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.action-btn.delete {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+    margin-right: auto;
+}
+
+.active-pin {
+    color: #ffffff;
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* EDIT PROFILE & AVATARS */
+.edit-profile-card {
+    max-width: 500px;
+    margin: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.edit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.edit-top-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, .08);
+    color: white;
+    cursor: pointer;
+}
+
+.save-edit {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.presets-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin-bottom: 15px;
+}
+
+.preset-avatar {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 15px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, .05);
+}
+
+.preset-avatar:hover {
+    border-color: #ffffff;
+}
+
+/* MODAL */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, .85);
+    backdrop-filter: blur(12px);
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFade .25s ease;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* PALETTES */
+.full-palettes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.palette-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .05);
+    font-size: 11px;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+}
+
+.color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-purple {
+    background: #ffffff;
+}
+
+.dot-cyber {
+    background: #d4d4d4;
+}
+
+.dot-emerald {
+    background: #a3a3a3;
+}
+
+.dot-sunset {
+    background: #737373;
+}
+
+.dot-pink {
+    background: #525252;
+}
+
+.dot-crimson {
+    background: #404040;
+}
+
+.dot-skyblue {
+    background: #262626;
+}
+
+.dot-golden {
+    background: #171717;
+}
+
+.dot-neongreen {
+    background: #0a0a0a;
+}
+
+/* DYNAMIC PALETTE STYLES (تحويل كل الباليتات لدرجات الأبيض والأسود) */
+html[data-palette="cyber"] {
+    --main-color: #ffffff;
+    --main-color-2: #a3a3a3;
+}
+
+html[data-palette="emerald"] {
+    --main-color: #e5e5e5;
+    --main-color-2: #737373;
+}
+
+html[data-palette="sunset"] {
+    --main-color: #d4d4d4;
+    --main-color-2: #525252;
+}
+
+html[data-palette="pink"] {
+    --main-color: #ffffff;
+    --main-color-2: #404040;
+}
+
+html[data-palette="crimson"] {
+    --main-color: #a3a3a3;
+    --main-color-2: #262626;
+}
+
+html[data-palette="skyblue"] {
+    --main-color: #ffffff;
+    --main-color-2: #171717;
+}
+
+html[data-palette="golden"] {
+    --main-color: #e5e5e5;
+    --main-color-2: #262626;
+}
+
+html[data-palette="neongreen"] {
+    --main-color: #ffffff;
+    --main-color-2: #525252;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    z-index: 100000;
+    left: 50%;
+    bottom: 100px;
+    transform: translateX(-50%) translateY(20px);
+    min-width: 220px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #000000;
+    font-weight: bold;
+    border: 1px solid rgba(255, 255, 255, .2);
+    text-align: center;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* STORY CARD */
+.story-card {
+    width: 100%;
+    max-width: 340px;
+    padding: 20px;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #262626, #000000);
+    border: 1px solid var(--glass-border);
+}
+
+.story-box {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 17px;
+    background: #ffffff;
+    color: #000000;
+}
+
+/* PREMIUM STYLES */
+.premium-icon {
+    color: #ffffff;
+}
+
+.premium-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .04);
+}
+
+.premium-feature-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .1);
+    font-size: 17px;
+    color: #ffffff;
+}
+
+.premium-feature-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: right;
+}
+
+.premium-section {
+    margin-top: 20px;
+}
+
+.premium-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.premium-plans {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.premium-plan {
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, .04);
+    color: var(--text-main);
+    border-radius: 16px;
+    padding: 14px;
+    text-align: right;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.premium-plan.selected {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, .15);
+}
+
+.premium-plan-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .3);
+    border-radius: 10px;
+}
+
+/* ==========================================
+   تنسيق زر نسخ الرابط - GLASSMORPHISM (أبيض وأسود)
+   ========================================== */
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 11px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 16px;
+
+    /* التأثير الزجاجي (Glassmorphism) */
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    color: #ffffff !important;
+
+    cursor: pointer;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.12);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.copy-btn i {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* ضبط الكارت ليكون مرجع التموضع */
+.profile-card {
+    position: relative;
+    padding-top: 25px;
+}
+
+/* زر الإعدادات في الزاوية العلوية (يمين أو يسار حسب الرغبة) */
+.settings-icon-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    /* إذا أردته في الجانب الأبيسر، أو غيّرها إلى right: 15px للجانب الأيمن */
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.settings-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* مصغر الصورة داخل الرسالة */
+.msg-thumb-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-left: auto;
+    /* يدفع الصورة لجهة اليسار في الواجهات العربية */
+    display: block;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.msg-thumb-img:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* نافذة عرض الصورة المكبرة (Lightbox) */
+.image-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.image-modal.active {
+    display: flex;
+}
+
+.image-modal img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    /* يحافظ على أبعاد الصورة الأصلية */
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.profile-bio {
+    background: rgba(255, 255, 255, 0.05);
+    /* خلفية بيضاء شفافة جداً */
+    backdrop-filter: blur(10px);
+    /* تأثير الضبابية الزجاجي */
+    -webkit-backdrop-filter: blur(10px);
+    /* لدعم متصفحات Safari */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    /* إطار ناعم مضيء */
+    border-radius: 16px;
+    /* حواف دائرية مثل بقية العناصر */
+    padding: 10px 18px;
+    /* مسافة داخلية للنص */
+    margin: 12px auto;
+    /* محاذاة في المنتصف مع مسافة رأسية */
+    display: inline-block;
+    /* يتكيف الحجم على حساب طول النص */
+    max-width: 85%;
+    /* منع الخروج عن أبعاد البطاقة */
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* ظل خفيف من الأسفل */
+    word-break: break-word;
+    /* كسر الكلمات الطويلة تلقائياً */
+}
