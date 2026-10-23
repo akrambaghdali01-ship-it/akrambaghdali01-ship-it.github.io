@@ -1,0 +1,977 @@
+/* =====================================================
+   I3TARFLI - STYLE.CSS (THEMES ENGINE & GLASSMORPHISM)
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   VARIABLES & THEMES CONFIGURATION
+===================================================== */
+
+/* الألوان الافتراضية (أسود وأبيض) */
+:root {
+    --bg-main: #000000;
+    --text-main: #ffffff;
+    --text-sub: #a0a0a0;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --navbar-bg: rgba(255, 255, 255, 0.05);
+    --btn-bg: #ffffff;
+    --btn-text: #000000;
+}
+
+/* ثيم البنفسجي */
+html[data-palette="purple"] {
+    --bg-main: #1e1b4b;
+    --text-main: #f3e8ff;
+    --text-sub: #c084fc;
+    --card-bg: rgba(109, 40, 217, 0.25);
+    --glass-border: rgba(192, 132, 252, 0.35);
+    --navbar-bg: rgba(88, 28, 135, 0.6);
+    --btn-bg: #c084fc;
+    --btn-text: #1e1b4b;
+}
+
+/* ثيم الزمردي (الأخضر) */
+html[data-palette="emerald"] {
+    --bg-main: #022c22;
+    --text-main: #ecfdf5;
+    --text-sub: #34d399;
+    --card-bg: rgba(5, 150, 105, 0.25);
+    --glass-border: rgba(52, 211, 153, 0.35);
+    --navbar-bg: rgba(6, 78, 59, 0.6);
+    --btn-bg: #34d399;
+    --btn-text: #022c22;
+}
+
+/* ثيم الغروب (البرتقالي/الأحمر) */
+html[data-palette="sunset"] {
+    --bg-main: #451a03;
+    --text-main: #fff7ed;
+    --text-sub: #fbbf24;
+    --card-bg: rgba(217, 119, 6, 0.25);
+    --glass-border: rgba(251, 191, 36, 0.35);
+    --navbar-bg: rgba(120, 53, 15, 0.6);
+    --btn-bg: #fbbf24;
+    --btn-text: #451a03;
+}
+
+/* ثيم الأزرق السماوي */
+html[data-palette="skyblue"] {
+    --bg-main: #0c4a6e;
+    --text-main: #f0f9ff;
+    --text-sub: #38bdf8;
+    --card-bg: rgba(2, 132, 199, 0.25);
+    --glass-border: rgba(56, 189, 248, 0.35);
+    --navbar-bg: rgba(12, 74, 110, 0.6);
+    --btn-bg: #38bdf8;
+    --btn-text: #0c4a6e;
+}
+
+/* ثيم الوردي */
+[data-palette="pink"] {
+    --bg-main: #1f1017;
+    --card-bg: rgba(219, 39, 119, 0.1);
+    --border-color: rgba(219, 39, 119, 0.3);
+    --btn-bg: #db2777;
+    --btn-hover: #be185d;
+    --text-main: #fbcfe8;
+    --text-sub: #f472b6;
+}
+
+/* ثيم الذهبي */
+[data-palette="gold"] {
+    --bg-main: #1c1917;
+    --card-bg: rgba(202, 138, 4, 0.1);
+    --border-color: rgba(202, 138, 4, 0.3);
+    --btn-bg: #ca8a04;
+    --btn-hover: #a16207;
+    --text-main: #fef08a;
+    --text-sub: #facc15;
+}
+
+/* ثيم النيون (Neon) */
+[data-palette="neon"] {
+    --bg-main: #09090b;
+    --text-main: #f43f5e;
+    --text-sub: #38bdf8;
+    --card-bg: rgba(24, 24, 27, 0.7);
+    --glass-border: rgba(244, 63, 94, 0.4);
+    --navbar-bg: rgba(9, 9, 11, 0.85);
+    --btn-bg: #f43f5e;
+    --btn-text: #ffffff;
+}
+
+/* ثيم الفضاء (Cosmic) */
+[data-palette="cosmic"] {
+    --bg-main: #030712;
+    --text-main: #e0e7ff;
+    --text-sub: #818cf8;
+    --card-bg: rgba(30, 27, 75, 0.3);
+    --glass-border: rgba(129, 140, 248, 0.35);
+    --navbar-bg: rgba(15, 23, 42, 0.8);
+    --btn-bg: #6366f1;
+    --btn-text: #ffffff;
+}
+
+/* ثيم الثلجي (Ice) */
+[data-palette="ice"] {
+    --bg-main: #f1f5f9;
+    --text-main: #0f172a;
+    --text-sub: #0284c7;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(2, 132, 199, 0.25);
+    --navbar-bg: rgba(255, 255, 255, 0.85);
+    --btn-bg: #0284c7;
+    --btn-text: #ffffff;
+}
+
+/* ثيم الياقوت الأحمر (Ruby) */
+[data-palette="ruby"] {
+    --bg-main: #2b0b0e;
+    --text-main: #ffe4e6;
+    --text-sub: #fb7185;
+    --card-bg: rgba(159, 18, 57, 0.2);
+    --glass-border: rgba(251, 113, 133, 0.35);
+    --navbar-bg: rgba(136, 19, 55, 0.6);
+    --btn-bg: #e11d48;
+    --btn-text: #ffffff;
+}
+
+/* ثيم الأرجواني الداكن (Amethyst) */
+[data-palette="amethyst"] {
+    --bg-main: #13091e;
+    --text-main: #f3e8ff;
+    --text-sub: #d8b4fe;
+    --card-bg: rgba(147, 51, 234, 0.2);
+    --glass-border: rgba(216, 180, 254, 0.3);
+    --navbar-bg: rgba(88, 28, 135, 0.7);
+    --btn-bg: #a855f7;
+    --btn-text: #ffffff;
+}
+
+/* ثيم الرمادي الفخم (Dark Slate / Titanium) */
+[data-palette="titanium"] {
+    --bg-main: #0f172a;
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+    --card-bg: rgba(51, 65, 85, 0.4);
+    --glass-border: rgba(148, 163, 184, 0.25);
+    --navbar-bg: rgba(30, 41, 59, 0.8);
+    --btn-bg: #64748b;
+    --btn-text: #ffffff;
+}
+
+/* ثيم العنابي / الكرزي (Bordeaux) */
+[data-palette="bordeaux"] {
+    --bg-main: #1a080c;
+    --text-main: #fce7f3;
+    --text-sub: #f472b6;
+    --card-bg: rgba(190, 24, 93, 0.25);
+    --glass-border: rgba(244, 114, 182, 0.35);
+    --navbar-bg: rgba(131, 24, 67, 0.7);
+    --btn-bg: #db2777;
+    --btn-text: #ffffff;
+}
+
+/* ثيم نيون ليموني / فسفوري (Cyber Lime) */
+[data-palette="lime"] {
+    --bg-main: #0a100d;
+    --text-main: #ecfdf5;
+    --text-sub: #a3e635;
+    --card-bg: rgba(132, 204, 22, 0.15);
+    --glass-border: rgba(163, 230, 53, 0.35);
+    --navbar-bg: rgba(20, 35, 15, 0.8);
+    --btn-bg: #84cc16;
+    --btn-text: #0a100d;
+}
+
+/* ثيم خوخي / بوب (Peach Pop) */
+[data-palette="peach"] {
+    --bg-main: #1f120e;
+    --text-main: #fff7ed;
+    --text-sub: #d37c46;
+    --card-bg: rgba(255, 140, 66, 0.2);
+    --glass-border: rgba(255, 140, 66, 0.35);
+    --navbar-bg: rgba(120, 53, 15, 0.7);
+    --btn-bg: #c77541;
+    --btn-text: #1f120e;
+}
+
+/* ثيم تركواز بحري (Teal Ocean) */
+[data-palette="teal"] {
+    --bg-main: #041f1e;
+    --text-main: #f0fdfa;
+    --text-sub: #2dd4bf;
+    --card-bg: rgba(13, 148, 136, 0.25);
+    --glass-border: rgba(45, 212, 191, 0.35);
+    --navbar-bg: rgba(15, 118, 110, 0.7);
+    --btn-bg: #14b8a6;
+    --btn-text: #ffffff;
+}
+
+/* =====================================================
+   BASE & LAYOUT STYLES
+===================================================== */
+
+body {
+    font-family: "Tajawal", sans-serif;
+    direction: rtl;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 15px 110px;
+    min-height: 100vh;
+}
+
+/* VIEWS & ANIMATIONS */
+.app-view {
+    display: none;
+    animation: pageIn .35s ease;
+}
+
+.app-view.active {
+    display: block;
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* GLASS CARD */
+.glass-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 24px;
+    background: var(--card-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .5);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    margin-bottom: 15px;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* PROFILE HEADER */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 10px;
+    border: 3px solid var(--text-main) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .3);
+}
+
+.user-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: var(--text-main) !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.user-handle {
+    color: var(--text-sub) !important;
+    font-size: 13px;
+    margin-bottom: 5px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.user-bio {
+    color: var(--text-sub) !important;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.profile-bio {
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 16px;
+    padding: 10px 18px;
+    margin: 12px auto;
+    display: inline-block;
+    max-width: 90%;
+    color: var(--text-main) !important;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    word-break: break-word;
+}
+
+/* BIO CARD */
+.bio-card {
+    width: 100%;
+    margin: 14px auto 10px;
+    padding: 14px 16px;
+    background: var(--card-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 18px;
+    backdrop-filter: blur(15px);
+    text-align: right;
+}
+
+.bio-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--text-main) !important;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.bio-card-title i {
+    color: var(--text-main) !important;
+}
+
+/* INPUTS & TEXTAREAS */
+.glass-input,
+textarea,
+#anonymousMessageInput {
+    width: 100%;
+    border: 1px solid var(--glass-border) !important;
+    outline: none;
+    background: rgba(0, 0, 0, 0.25) !important;
+    color: var(--text-main) !important;
+    border-radius: 15px;
+    padding: 13px 15px;
+    margin-bottom: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: .25s;
+    box-sizing: border-box;
+    resize: none !important;
+}
+
+.glass-input:focus,
+#anonymousMessageInput:focus {
+    border-color: var(--text-main) !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* BUTTONS */
+.btn-main {
+    width: 100%;
+    min-height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 10px 16px;
+    transition: .25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+
+/* COPY LINK BUTTON */
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 11px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 16px;
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+    cursor: pointer;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+.copy-btn i {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* =====================================================
+   NAVIGATION BAR
+===================================================== */
+.nav-bar {
+    position: fixed;
+    z-index: 9000;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 25px);
+    max-width: 480px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 4px;
+    padding: 6px 8px;
+    border-radius: 22px;
+    background: var(--navbar-bg) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-item {
+    flex: 1;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 16px;
+    color: var(--text-sub) !important;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-item i {
+    font-size: 15px;
+    transition: transform 0.2s ease;
+}
+
+.nav-item:hover {
+    color: var(--text-main) !important;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-item.active {
+    color: var(--text-main) !important;
+    background: var(--card-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(10px);
+    font-weight: 800;
+}
+
+.nav-item.active i {
+    transform: scale(1.1);
+}
+
+/* =====================================================
+   TOP PALETTE BUTTON & MODAL
+===================================================== */
+.top-settings-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 8000;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.top-settings-btn:hover {
+    transform: rotate(45deg) scale(1.05);
+}
+
+.top-settings-btn:active {
+    transform: scale(0.95);
+}
+
+/* MODAL CONTAINER */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, .85);
+    backdrop-filter: blur(12px);
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFade .25s ease;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* PALETTES GRID */
+.full-palettes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.palette-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--card-bg) !important;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+    transition: transform 0.2s;
+}
+
+.palette-item:hover {
+    transform: scale(1.02);
+}
+
+.color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* =====================================================
+   UPLOAD BOX & MESSAGES
+===================================================== */
+.upload-box {
+    border: 1px dashed var(--glass-border) !important;
+    border-radius: 17px;
+    padding: 20px;
+    margin-bottom: 13px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--text-sub) !important;
+}
+
+/* MESSAGE CARD & ACTIONS */
+.glass-card.pinned {
+    background: var(--card-bg) !important;
+    border-color: var(--text-main) !important;
+    box-shadow: 0 0 15px var(--glass-border);
+}
+
+.glass-card.pinned div,
+.glass-card.pinned span {
+    color: var(--text-main) !important;
+}
+
+.reply-box {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .08);
+    border-right: 3px solid var(--text-main) !important;
+    font-size: 13px;
+}
+
+.reply-header {
+    font-weight: bold;
+    color: var(--text-main) !important;
+    margin-bottom: 4px;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--glass-border) !important;
+}
+
+.action-btn {
+    border: 1px solid var(--glass-border) !important;
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
+    border-radius: 10px;
+    padding: 8px 11px;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.action-btn.delete {
+    color: #ff5555 !important;
+    border-color: rgba(255, 85, 85, 0.4) !important;
+    margin-right: auto;
+}
+
+.active-pin {
+    color: var(--text-main) !important;
+    border-color: var(--text-main) !important;
+    background: var(--card-bg) !important;
+}
+
+/* EDIT PROFILE & AVATARS */
+.edit-profile-card {
+    max-width: 500px;
+    margin: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.edit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.edit-top-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border) !important;
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
+    cursor: pointer;
+}
+
+.save-edit {
+    color: var(--text-main) !important;
+    font-weight: bold;
+}
+
+.presets-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin-bottom: 15px;
+}
+
+.preset-avatar {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 15px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, .05);
+}
+
+.preset-avatar:hover {
+    border-color: var(--text-main) !important;
+}
+
+/* =====================================================
+   TOAST & LIGHTBOX
+===================================================== */
+.toast {
+    position: fixed;
+    z-index: 100000;
+    left: 50%;
+    bottom: 100px;
+    transform: translateX(-50%) translateY(20px);
+    min-width: 220px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    font-weight: bold;
+    border: 1px solid var(--glass-border) !important;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.msg-thumb-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid var(--glass-border) !important;
+    margin-left: auto;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.msg-thumb-img:hover {
+    transform: scale(1.05);
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.image-modal.active {
+    display: flex;
+}
+
+.image-modal img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* =====================================================
+   ANONYMOUS MESSAGE CARD (VISITOR VIEW)
+===================================================== */
+#anonymousSendCard {
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 450px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+#targetUserTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main) !important;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#sendMessageBtn {
+    width: 100% !important;
+    margin-top: 15px;
+    padding: 13px 20px;
+    border-radius: 14px !important;
+    border: 1px solid var(--glass-border) !important;
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+#sendMessageBtn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+#sendMessageBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+body.visitor-mode .profile-header,
+body.visitor-mode #nav-bar,
+body.visitor-mode #copy-link-btn,
+body.visitor-mode .top-settings-btn {
+    display: none !important;
+}
+
+body.visitor-mode #anonymousSendCard {
+    display: block !important;
+    margin: 50px auto !important;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border) !important;
+    border-radius: 10px;
+}
+
+#palette-icon-btn {
+    display: flex !important;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN FOR MOBILE (تجاوب الهواتف المتقدم)
+===================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .container {
+        padding: 12px 12px 90px;
+    }
+
+    .glass-card {
+        padding: 16px 14px !important;
+        border-radius: 18px !important;
+    }
+
+    .avatar {
+        width: 75px !important;
+        height: 75px !important;
+    }
+
+    .user-name {
+        font-size: 18px !important;
+    }
+
+    .user-handle,
+    .user-bio {
+        font-size: 12px !important;
+    }
+
+    .nav-bar {
+        bottom: 10px !important;
+        width: calc(100% - 20px) !important;
+        height: 58px !important;
+        border-radius: 18px !important;
+        padding: 4px 6px !important;
+    }
+
+    .nav-item {
+        height: 44px !important;
+        font-size: 9px !important;
+    }
+
+    .nav-item i {
+        font-size: 14px !important;
+    }
+
+    .glass-input,
+    textarea,
+    #anonymousMessageInput {
+        font-size: 14px !important;
+        padding: 11px 13px !important;
+        border-radius: 12px !important;
+    }
+
+    .btn-main {
+        min-height: 44px !important;
+        font-size: 13px !important;
+        border-radius: 12px !important;
+    }
+
+    .top-settings-btn {
+        top: 12px !important;
+        left: 12px !important;
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 16px !important;
+    }
+
+    .presets-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 6px !important;
+    }
+
+    .full-palettes-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    #anonymousSendCard {
+        width: 100% !important;
+        padding: 16px 12px !important;
+        margin: 15px auto !important;
+    }
+}
