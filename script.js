@@ -1013,21 +1013,30 @@ function setupVisitorUI(userData) {
 
     const isOwner = auth.currentUser && auth.currentUser.uid === currentTargetUserId;
 
-    if (!isOwner) {
-        if (navBar) navBar.style.display = "none";
-        if (copyBtn) copyBtn.style.display = "none";
+    if (!isOwner) {function setupVisitorUI(userData) {
+    // إضافة كلاس الزائر لإخفاء العناصر المكررة
+    document.body.classList.add("visitor-mode");
 
-        document.querySelectorAll(".app-view").forEach(view => view.classList.remove("active"));
-        document.getElementById("view-inbox")?.classList.add("active");
+    const titleEl = document.getElementById("targetUserTitle");
+    const sendCard = document.getElementById("anonymousSendCard");
+    
+    const profileNameEl = document.getElementById("display-name");
+    const profileHandleEl = document.getElementById("display-handle");
+    const profileBioEl = document.getElementById("display-bio");
+    const profileAvatarEl = document.getElementById("display-avatar");
 
-        const messagesList = document.getElementById("messages-list");
-        if (messagesList) messagesList.style.display = "none";
+    if (profileNameEl) profileNameEl.innerText = userData.name || "مستخدم";
+    if (profileHandleEl) profileHandleEl.innerText = userData.handle || "";
+    if (profileBioEl) profileBioEl.innerText = userData.bio || "";
+    if (profileAvatarEl && userData.avatar) profileAvatarEl.src = userData.avatar;
+
+    if (titleEl) {
+        titleEl.innerText = `أرسل رسالة سرية لـ ${userData.name || userData.handle || ""}`;
     }
 
     if (sendCard) sendCard.style.display = "block";
     hideLoadingScreen();
 }
-
 function redirectToAppropriateView() {
     const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, document.title, cleanUrl);
