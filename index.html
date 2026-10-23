@@ -108,21 +108,34 @@
                 </div>
             </div>
         </div>
-        <!-- كارت الإرسال المباشر عبر الرابط للزوار -->
-        <div id="anonymousSendCard" style="display: none;">
-            <h3 id="targetUserTitle">أرسل رسالة سرية</h3>
-            <textarea id="anonymousMessageInput" placeholder="اكتب رسالتك السرية هنا..."></textarea>
-
-            <div class="upload-box" onclick="document.getElementById('file-input').click()">
-                <i class="fa-solid fa-cloud-arrow-up" style="font-size:22px; margin-bottom:5px;"></i>
-                <p style="font-size:12px; color:var(--text-sub);">يمكنك إرفاق صورة مع الرسالة</p>
-                <img id="image-preview"
-                    style="width:50%; max-height:180px; object-fit:cover; border-radius:12px; display:none; margin-top:10px;">
-                <button id="sendMessageBtn" onclick="sendAnonymousMessage()">
-                    <i class="fa-solid fa-paper-plane"></i> إرسال سرّي
-                </button>
+             <!-- كارت الإرسال المباشر عبر الرابط للزوار -->
+        <div id="anonymousSendCard" class="glass-card" style="display: none;">
+            <!-- 1. معلومات صاحب الحساب في الأعلى -->
+            <div class="profile-header" style="margin-bottom: 15px;">
+                <img id="display-avatar" src="" class="avatar" alt="Avatar">
+                <h3 id="targetUserTitle" class="user-name">أرسل رسالة سرية لـ</h3>
+                <p id="display-handle" class="user-handle"></p>
+                <p id="display-bio" class="profile-bio"></p>
             </div>
 
+            <!-- 2. مربع كتابة الرسالة -->
+            <textarea id="anonymousMessageInput" class="glass-input" rows="4"
+                placeholder="اكتب رسالتك السرية هنا..."></textarea>
+
+            <!-- 3. مربع إرفاق الصورة -->
+            <div class="upload-box" onclick="document.getElementById('anonymousImageInput').click();">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size: 24px; margin-bottom: 5px;"></i>
+                <span>يمكنك إرفاق صورة مع الرسالة</span>
+                <input type="file" id="anonymousImageInput" accept="image/*" style="display: none;"
+                    onchange="handleImageUpload(event)">
+                <img id="image-preview" src="" alt="Preview">
+            </div>
+
+            <!-- 4. زر الإرسال في الأسفل مستقل تماماً -->
+            <button id="sendMessageBtn" class="btn-main" type="button">
+                <i class="fa-solid fa-paper-plane"></i> إرسال سرّي
+            </button>
+        </div>
             <input type="file" id="file-input" accept="image/*" style="display:none;"
                 onchange="handleImageUpload(event)">
         </div>
