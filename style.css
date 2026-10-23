@@ -619,25 +619,43 @@ textarea,
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* صندوق إرفاق الصورة */
+/* مربع رفع الصورة */
 .upload-box {
     border: 1px dashed var(--glass-border) !important;
     border-radius: 15px;
     padding: 15px;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin: 10px 0 !important;
     text-align: center;
     cursor: pointer;
     color: var(--text-sub) !important;
     width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    background: rgba(0, 0, 0, 0.15) !important;
+    background: rgba(0, 0, 0, 0.2) !important;
 }
 
+/* زر الإرسال */
+#sendMessageBtn {
+    width: 100% !important;
+    margin-top: 15px !important;
+    padding: 13px 20px;
+    border-radius: 14px !important;
+    border: 1px solid var(--glass-border) !important;
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative !important;
+    z-index: 2;
+}
 /* معاينة الصورة المرفقة داخل صندوق الإرسال */
 #image-preview {
     max-width: 100px;
