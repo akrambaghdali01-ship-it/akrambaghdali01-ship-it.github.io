@@ -1039,3 +1039,8 @@ body.visitor-mode #copy-link-btn,
 body.visitor-mode .top-settings-btn {
     display: none !important;
 }
+/* إجبار كارت الإرسال على الظهور دائماً في وضع الزائر */
+body.visitor-mode #anonymousSendCard {
+    display: block !important;
+    margin: 40px auto !important;
+}
