@@ -1,5 +1,4 @@
 // FIREBASE IMPORTS
-// =====================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import {
     getFirestore, doc, getDoc, setDoc, addDoc, getDocs, updateDoc, deleteDoc, query, where, orderBy, limit, collection, onSnapshot, serverTimestamp
@@ -15,10 +14,7 @@ import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
-// =====================================================
 // FIREBASE CONFIG
-// =====================================================
-
 const firebaseConfig = {
     apiKey: "AIzaSyAsi_WiBKwWyqRCrgDV-urNkksC7n8kdic",
     authDomain: "tarfli.firebaseapp.com",
@@ -36,15 +32,10 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
-// Helper: Hide Loader
 function hideLoadingScreen() {
     const loader = document.getElementById("app-loading");
     if (loader) loader.style.display = "none";
 }
-
-// =====================================================
-// VARIABLES
-// =====================================================
 
 let currentUser = null;
 let selectedRecipient = null;
@@ -80,13 +71,6 @@ const presetAvatars = [
     "https://api.dicebear.com/7.x/bottts/svg?seed=RoboX"
 ];
 
-// =====================================================
-// START (DOM LOADED)
-// =====================================================
-// =====================================================
-// EMAIL & PASSWORD AUTH (تسجيل يدوي)
-// =====================================================
-
 let isSignUpMode = false;
 
 window.toggleAuthMode = function (e) {
@@ -110,7 +94,6 @@ window.toggleAuthMode = function (e) {
 
 window.handleEmailAuth = async function (e) {
     e.preventDefault();
-
     const email = document.getElementById("auth-email")?.value.trim();
     const password = document.getElementById("auth-password")?.value;
     const submitBtn = document.getElementById("auth-submit-btn");
@@ -127,13 +110,10 @@ window.handleEmailAuth = async function (e) {
 
     try {
         if (submitBtn) submitBtn.disabled = true;
-
         if (isSignUpMode) {
-            // إنشاء حساب جديد
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password);
             showToast("تم إنشاء الحساب بنجاح ");
         } else {
-            // تسجيل الدخول
             await signInWithEmailAndPassword(auth, email, password);
             showToast("تم تسجيل الدخول بنجاح ");
         }
@@ -152,20 +132,16 @@ window.handleEmailAuth = async function (e) {
         if (submitBtn) submitBtn.disabled = false;
     }
 };
+
 document.addEventListener("DOMContentLoaded", async () => {
     renderPresetsGrid();
     convertEmojisToApple();
 
-    // Attach Click Events directly
-    document.getElementById("sendMsgBtn")?.addEventListener("click", sendAnonymousMessage);
+    document.getElementById("sendMessageBtn")?.addEventListener("click", sendAnonymousMessage);
     document.getElementById("sendBtn")?.addEventListener("click", sendCloudMessage);
 
     await loadProfileFromUrl();
 });
-
-// =====================================================
-// AUTH STATE
-// =====================================================
 
 onAuthStateChanged(auth, async user => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -191,10 +167,6 @@ onAuthStateChanged(auth, async user => {
     }
 });
 
-// =====================================================
-// GOOGLE / FACEBOOK LOGIN
-// =====================================================
-
 document.getElementById("google-login-btn")?.addEventListener("click", () => {
     signInWithPopup(auth, provider)
         .then(() => showToast("تم تسجيل الدخول بنجاح "))
@@ -203,19 +175,6 @@ document.getElementById("google-login-btn")?.addEventListener("click", () => {
             showToast("خطأ تسجيل الدخول بجوجل ");
         });
 });
-
-document.getElementById("facebook-login-btn")?.addEventListener("click", () => {
-    signInWithPopup(auth, facebookProvider)
-        .then(() => showToast("تم تسجيل الدخول بنجاح "))
-        .catch(error => {
-            console.error(error);
-            showToast("خطأ تسجيل الدخول بفيسبوك ");
-        });
-});
-
-// =====================================================
-// SYNC USER
-// =====================================================
 
 async function syncUserToDatabase(user) {
     try {
@@ -246,10 +205,6 @@ async function syncUserToDatabase(user) {
     }
 }
 
-// =====================================================
-// THEMES & PALETTE SYSTEM (إدارة الثيمات والألوان)
-// =====================================================
-
 function applySavedTheme(themeName) {
     if (themeName && themeName !== "default") {
         document.documentElement.setAttribute("data-palette", themeName);
@@ -270,7 +225,6 @@ window.closePaletteModal = function () {
 
 window.changePalette = async function (themeName) {
     applySavedTheme(themeName);
-
     if (currentUser && currentUser.uid) {
         try {
             await setDoc(doc(db, "users", currentUser.uid), { theme: themeName }, { merge: true });
@@ -296,15 +250,9 @@ window.handleLogout = async function () {
     }
 };
 
-// =====================================================
-// INIT UI & PROFILE
-// =====================================================
-
 function togglePaletteIcon(show) {
     const paletteBtn = document.getElementById("palette-icon-btn");
-    if (paletteBtn) {
-        paletteBtn.style.display = show ? "flex" : "none";
-    }
+    if (paletteBtn) paletteBtn.style.display = show ? "flex" : "none";
 }
 
 function initAppUI() {
@@ -319,7 +267,6 @@ function initAppUI() {
     if (nav) nav.style.display = "flex";
 
     switchTab("inbox", document.querySelector(".nav-item"));
-
     fetchCloudMessages();
     fetchAllUsers();
     renderSentUsers();
@@ -327,7 +274,6 @@ function initAppUI() {
 
 function updateProfileUI() {
     if (!currentUser) return;
-
     const name = document.getElementById("display-name");
     const handle = document.getElementById("display-handle");
     const bio = document.getElementById("display-bio");
@@ -338,10 +284,6 @@ function updateProfileUI() {
     if (bio) bio.innerText = currentUser.bio || "واش عينيا ابعت(ي) مساج للكراش تاعك ";
     if (avatar) avatar.src = currentUser.avatar;
 }
-
-// =====================================================
-// SENT USERS MANAGEMENT
-// =====================================================
 
 function saveSentUser(user) {
     if (!currentUser || !user) return;
@@ -419,12 +361,12 @@ window.openSentUser = function (user) {
 };
 
 window.sendAnonymousMessage = async function () {
-    const sendBtn = document.getElementById("sendMessageBtn") || document.getElementById("sendMsgBtn");
+    const sendBtn = document.getElementById("sendMessageBtn");
     const messageInput = document.getElementById("anonymousMessageInput");
     const text = messageInput ? messageInput.value.trim() : "";
 
-    if (!text) {
-        showToast("اكتب رسالة أولاً ");
+    if (!text && !uploadedImageBase64) {
+        showToast("اكتب رسالة أو أرفق صورة أولاً ");
         return;
     }
 
@@ -442,7 +384,7 @@ window.sendAnonymousMessage = async function () {
         await addDoc(collection(db, "messages"), {
             recipientUid: currentTargetUserId,
             text: text,
-            img: null,
+            img: uploadedImageBase64,
             time: new Date().toLocaleString('ar-EG'),
             timestamp: Date.now(),
             isPinned: false,
@@ -450,11 +392,15 @@ window.sendAnonymousMessage = async function () {
         });
 
         if (messageInput) messageInput.value = "";
-        showToast("تم إرسال رسالتك بنجاح ");
+        uploadedImageBase64 = null;
+        const preview = document.getElementById("image-preview");
+        if (preview) {
+            preview.src = "";
+            preview.style.display = "none";
+        }
 
-        setTimeout(() => {
-            redirectToAppropriateView();
-        }, 1200);
+        showToast("تم إرسال رسالتك بنجاح ");
+        setTimeout(() => { redirectToAppropriateView(); }, 1200);
 
     } catch (error) {
         console.error("خطأ أثناء الإرسال:", error);
@@ -467,13 +413,8 @@ window.sendAnonymousMessage = async function () {
     }
 };
 
-// =====================================================
-// FETCH MESSAGES & ALL USERS
-// =====================================================
-
 window.fetchCloudMessages = function () {
     if (!currentUser) return;
-
     try {
         const q = query(
             collection(db, "messages"),
@@ -512,10 +453,6 @@ async function fetchAllUsers() {
         console.error("خطأ جلب قائمة المستخدمين:", error);
     }
 }
-
-// =====================================================
-// SEARCH & RENDER
-// =====================================================
 
 window.handleSearch = function () {
     const input = document.getElementById("search-input");
@@ -570,10 +507,6 @@ window.openSendToUser = function (user) {
 
     switchTab("send", null);
 };
-
-// =====================================================
-// MESSAGE ACTIONS
-// =====================================================
 
 window.deleteCloudMessage = async function (id) {
     try {
@@ -659,10 +592,6 @@ window.renderMessages = function () {
         </div>
     `).join("");
 };
-
-// =====================================================
-// LIGHTBOX, NAVIGATION, EDIT PROFILE
-// =====================================================
 
 window.openImageModal = function (src) {
     const modal = document.getElementById("image-modal");
@@ -778,10 +707,6 @@ window.handleImageUpload = function (event) {
     reader.readAsDataURL(file);
 };
 
-// =====================================================
-// PRESETS & UTILS
-// =====================================================
-
 function renderPresetsGrid() {
     const container = document.getElementById("presets-container");
     if (!container) return;
@@ -826,7 +751,7 @@ window.selectPresetAvatar = function (url) {
 window.copyProfileLink = function () {
     if (!currentUser) return;
     const rawHandle = currentUser.handle ? currentUser.handle.replace('@', '') : currentUser.uid;
-    const profileUrl = `${window.location.origin}${window.location.pathname}?u=${encodeURIComponent(rawHandle)}`;
+    const profileUrl = `https://akrambaghdali01-ship-it.github.io/?u=${encodeURIComponent(rawHandle)}`;
 
     navigator.clipboard.writeText(profileUrl)
         .then(() => showToast("تم نسخ رابط حسابك "))
@@ -840,9 +765,7 @@ window.showToast = function (text) {
 
     toastText.innerText = text;
     toast.classList.add("show");
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 3000);
+    setTimeout(() => { toast.classList.remove("show"); }, 3000);
 };
 
 function escapeHtml(text) {
@@ -856,25 +779,20 @@ function escapeHtml(text) {
 
 function convertEmojisToApple(root = document.body) {
     const walker = document.createTreeWalker(
-        root,
-        NodeFilter.SHOW_TEXT,
+        root, NodeFilter.SHOW_TEXT,
         {
             acceptNode(node) {
                 if (!node.nodeValue.trim() || node.parentElement.closest("script, style, textarea, input")) {
                     return NodeFilter.FILTER_REJECT;
                 }
-                return /[\p{Emoji_Presentation}\p{Extended_Pictographic}]/u.test(node.nodeValue)
-                    ? NodeFilter.FILTER_ACCEPT
-                    : NodeFilter.FILTER_REJECT;
+                return /[\p{Emoji_Presentation}\p{Extended_Pictographic}]/u.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
             }
         }
     );
 
     const nodes = [];
     let node;
-    while ((node = walker.nextNode())) {
-        nodes.push(node);
-    }
+    while ((node = walker.nextNode())) nodes.push(node);
 
     nodes.forEach(textNode => {
         const text = textNode.nodeValue;
@@ -895,10 +813,6 @@ function convertEmojisToApple(root = document.body) {
         textNode.parentNode.replaceChild(fragment, textNode);
     });
 }
-
-// =====================================================
-// MODALS LOGIC
-// =====================================================
 
 window.openSettingsModal = function () {
     document.getElementById('settings-modal')?.classList.add('active');
@@ -926,10 +840,6 @@ window.closeSupportModal = function () {
     document.getElementById('support-modal')?.classList.remove('active');
 };
 
-// =====================================================
-// PENDING MESSAGES & VISITOR URL
-// =====================================================
-
 async function checkAndSendPendingMessage() {
     const savedMsg = localStorage.getItem("pending_anonymous_msg");
     if (!savedMsg || !currentUser) return;
@@ -941,7 +851,7 @@ async function checkAndSendPendingMessage() {
             text: msgData.text,
             img: msgData.img,
             time: msgData.time || new Date().toLocaleString('ar-EG'),
-            timestamp: msgData.timestamp || Date.now(),
+            timestamp: Date.now(),
             isPinned: false,
             reply: null
         });
@@ -992,38 +902,15 @@ async function loadProfileFromUrl() {
 }
 
 function setupVisitorUI(userData) {
-    const titleEl = document.getElementById("targetUserTitle");
-    const sendCard = document.getElementById("anonymousSendCard");
-    const navBar = document.getElementById("nav-bar");
-    const copyBtn = document.getElementById("copy-link-btn");
-
-    const profileNameEl = document.getElementById("display-name");
-    const profileHandleEl = document.getElementById("display-handle");
-    const profileBioEl = document.getElementById("display-bio");
-    const profileAvatarEl = document.getElementById("display-avatar");
-
-    if (profileNameEl) profileNameEl.innerText = userData.name || "مستخدم";
-    if (profileHandleEl) profileHandleEl.innerText = userData.handle || "";
-    if (profileBioEl) profileBioEl.innerText = userData.bio || "";
-    if (profileAvatarEl && userData.avatar) profileAvatarEl.src = userData.avatar;
-
-    if (titleEl) {
-        titleEl.innerText = `أرسل رسالة سرية لـ ${userData.name || userData.handle || ""}`;
-    }
-
-    const isOwner = auth.currentUser && auth.currentUser.uid === currentTargetUserId;
-
-    if (!isOwner) {function setupVisitorUI(userData) {
-    // إضافة كلاس الزائر لإخفاء العناصر المكررة
     document.body.classList.add("visitor-mode");
 
     const titleEl = document.getElementById("targetUserTitle");
     const sendCard = document.getElementById("anonymousSendCard");
-    
-    const profileNameEl = document.getElementById("display-name");
-    const profileHandleEl = document.getElementById("display-handle");
-    const profileBioEl = document.getElementById("display-bio");
-    const profileAvatarEl = document.getElementById("display-avatar");
+
+    const profileNameEl = document.getElementById("visitor-display-name") || document.getElementById("display-name");
+    const profileHandleEl = document.getElementById("visitor-display-handle") || document.getElementById("display-handle");
+    const profileBioEl = document.getElementById("visitor-display-bio") || document.getElementById("display-bio");
+    const profileAvatarEl = document.getElementById("visitor-display-avatar") || document.getElementById("display-avatar");
 
     if (profileNameEl) profileNameEl.innerText = userData.name || "مستخدم";
     if (profileHandleEl) profileHandleEl.innerText = userData.handle || "";
@@ -1034,9 +921,12 @@ function setupVisitorUI(userData) {
         titleEl.innerText = `أرسل رسالة سرية لـ ${userData.name || userData.handle || ""}`;
     }
 
-    if (sendCard) sendCard.style.display = "block";
+    if (sendCard) {
+        sendCard.style.display = "block";
+    }
     hideLoadingScreen();
 }
+
 function redirectToAppropriateView() {
     const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, document.title, cleanUrl);
@@ -1108,9 +998,7 @@ window.sendCloudMessage = async function () {
         showToast("تم إرسال الرسالة بنجاح ");
         saveSentUser(selectedRecipient);
 
-        setTimeout(() => {
-            switchTab("sent-users", null);
-        }, 1000);
+        setTimeout(() => { switchTab("sent-users", null); }, 1000);
 
     } catch (error) {
         console.error("خطأ الإرسال:", error);
