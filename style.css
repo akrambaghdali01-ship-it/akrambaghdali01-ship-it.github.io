@@ -1031,3 +1031,11 @@ body.visitor-mode #anonymousSendCard {
         margin: 15px auto !important;
     }
 }
+
+/* إخفاء البروفايل الخارجي وشريط التنقل في وضع الزائر */
+body.visitor-mode .profile-header:not(#anonymousSendCard .profile-header),
+body.visitor-mode #nav-bar,
+body.visitor-mode #copy-link-btn,
+body.visitor-mode .top-settings-btn {
+    display: none !important;
+}
